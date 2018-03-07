@@ -1,0 +1,21 @@
+{
+    "name": "profile-service",
+    "description": "Hello World ExpressJS WebService",
+    "version": "0.0.2",
+    "private": true,
+    "dependencies": {
+        "aws-sdk": "^2.179.0",
+        "aws-serverless-express": "latest",
+        "body-parser": "^1.18.2",
+        "bookshelf": "^0.12.1",
+        "bookshelf-cascade-delete": "^2.0.1",
+        "bookshelf-validate": "^2.0.3",
+        "config": "^1.29.1",
+        "cookie-parser": "^1.4.3",
+        "express": "latest",
+        "knex": "^0.14.2",
+        "nodemon": "^1.14.11",
+        "pg": "^7.4.1",
+        "validator": "^9.2.0"
+    }
+}

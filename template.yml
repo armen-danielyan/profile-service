@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+- AWS::Serverless-2016-10-31
+- AWS::CodeStar
+Parameters:
+  ProjectId:
+    Type: String
+    Description: AWS CodeStar projectID used to associate new resources to team members
+Resources:
+  Test:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Handler: index.handler
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Runtime: nodejs6.10
+  Demo:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Handler: index.handler
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Runtime: nodejs6.10
+  Dev:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Handler: index.handler
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Runtime: nodejs6.10
+  Stable:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Handler: index.handler
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Runtime: nodejs6.10
+  DevLambdaPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref Dev
+      Principal: apigateway.amazonaws.com
+  StableLambdaPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref Stable
+      Principal: apigateway.amazonaws.com
+  TestLambdaPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref Test
+      Principal: apigateway.amazonaws.com
+  DemoLambdaPermissions:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref Demo
+      Principal: apigateway.amazonaws.com
+# AWSTemplateFormatVersion: 2010-09-09
+# Transform:
+# - AWS::Serverless-2016-10-31
+# - AWS::CodeStar
+
+# Parameters:
+#   ProjectId:
+#     Type: String
+#     Description: AWS CodeStar projectID used to associate new resources to team members
+
+# Resources:
+#   Dev:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       Handler: index.handler
+#       Runtime: nodejs6.10
+#       Role:
+#         Fn::ImportValue:
+#           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+#       Events:
+#         AnyRequest:
+#           Type: Api
+#           Properties:
+#             Path: /
+#             Method: ANY
+#   Test:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       Handler: index.handler
+#       Runtime: nodejs6.10
+#       Role:
+#         Fn::ImportValue:
+#           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+#   Stable:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       Handler: index.handler
+#       Runtime: nodejs6.10
+#       Role:
+#         Fn::ImportValue:
+#           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+#   Demo:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       Handler: index.handler
+#       Runtime: nodejs6.10
+#       Role:
+#         Fn::ImportValue:
+#           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
